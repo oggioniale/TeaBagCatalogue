@@ -1,0 +1,105 @@
+---
+title: "Catalogue of the samples"
+# author:
+#   - name: Alessandro Oggioni & Caterina Bergami
+# date: "`r Sys.Date()`"
+# output: html_document
+# runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+
+## import dataset
+# samplesDataset <- readr::read_csv("informationOnSiteAndSamples_20190513.csv")
+# samplesDataset <- readRDS("samplesDataset.rds")
+# samplesDataset <- samplesDataset %>% dplyr::filter(!is.na(Latitude))
+# samplesDataset$sampleInfo <- paste0('<a href="http://www.get-it.it/objects/samples/teabag/', samplesDataset$Merged, '.xml" target = "_blank" class = "btn btn-primary">Sample info</a>')
+# samplesDatasetSP <- sf::st_as_sf(samplesDataset, coords = c("Longitude", "Latitude"), crs = 4326)
+# sf::write_sf(samplesDatasetSP, "samplesDataset.gpkg")
+samplesSP <- sf::st_read("samplesDataset.gpkg")
+# samplesMap <- samplesSP[,c(2:8,12,13,16,25,27,43)]
+# samplesTable <- samplesMap
+# sf::st_geometry(samplesTable) <- NULL
+```
+
+```{r map, echo=FALSE, message=FALSE, warning=FALSE}
+htmltools::div(
+  style = htmltools::css(width="100%", height="600px"),
+  leaflet::leaflet() %>%
+    leaflet::addTiles() %>%
+    # leaflet::addProviderTiles(provider = providers$CartoDB.DarkMatter) %>%
+    leafgl::addGlPoints(data = samplesSP[,c(2:8,12,13,16,25,27,43)], group = "samplesSP", popup = T, fillOpacity = 0.5, radius = 5) %>%
+    # setView(lng = 0, lat = 20, zoom = 2) %>%
+    leaflet::addLayersControl(position = 'bottomright',
+                                overlayGroups = c("samplesSP"),
+                                options = leaflet::layersControlOptions(collapsed = FALSE)
+      ) %>%
+      leaflet::addEasyButton(
+        leaflet::easyButton(
+          icon = "fa-crosshairs", title = "Locate Me",
+          onClick = leaflet::JS("function(btn, map){ map.locate({setView: true}); }")
+        )
+      ) %>%
+      leaflet::addEasyButton(
+        leaflet::easyButton(
+          icon = 'fa-globe', title = 'Zoom to max extension',
+          onClick = leaflet::JS("function(btn, map){ map.setZoom(1);}")
+        )
+      ),
+  aaaa <- DT::datatable(
+      samplesSP[,c(
+        2,
+        # 3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        12,
+        # 13,
+        16,
+        25,
+        # 27,
+        43
+      )],
+      colnames = c(
+        'Site_name',
+        # 'Country',
+        'Elevation',
+        'Zonobiome',
+        'Type of biotope',
+        'Tea_typ',
+        'Treat',
+        'Incubation period',
+        # 'Year_burial',
+        'Year_recov',
+        'Site_contact',
+        # 'Institution name',
+        'sampleSheet',
+        ''
+      ),
+      filter = "top",
+      rownames = FALSE,
+      extensions = "Scroller",
+      style = "bootstrap",
+      class = "compact",
+      width = "100%",
+      height = "100%",
+      escape = FALSE,
+      options = list(
+        pageLength = 10,
+        deferRender = TRUE,
+        # scrollY = 300, 
+        # scroller = TRUE,
+        lengthMenu = c(5, 25, 50, 100)#,
+        # order = list(list(0, 'asc'), list(2, 'desc'))
+      )
+    ),
+    DT::renderDT(aaaa)
+  )
+
+```
+
+
