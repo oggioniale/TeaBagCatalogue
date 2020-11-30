@@ -2,7 +2,7 @@
   title: "About This Website"
 ---
   
-  This is a first V1.0 of the Tea Composition Initiative of catalogue.
+  This is the first release V1.0 of the catalogue of samples of the ILTER TeaComposition Initiative.
   
 Credits
 -------
