@@ -1,2 +1,2 @@
 # TeaCompositionCatalogue
-First release of the Catalogue of sample collected by the particants to the ILTER initiative TeaComposition
+First release of the Catalogue of samples collected by the particants to the ILTER initiative TeaComposition
