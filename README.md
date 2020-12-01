@@ -3,7 +3,7 @@ This is the first release V1.0 of the catalogue of samples of the ILTER TeaCompo
   
 Credits
 -------
-The catalogue is being developed by Alessandro Oggioni ([IREA-CNR](http://www.irea.cnr.it){target="_blank"}) and Caterina Bergami ([ISMAR-CNR](http://www.ismar.cnr.it){target="_blank"}). It is released under the [GNU General Public License version 3](https://www.gnu.org/licenses/gpl-3.0.html){target="_blank"} (GPL‑3).
+The catalogue is being developed by Alessandro Oggioni ([IREA-CNR](http://www.irea.cnr.it){:target="_blank"}) and Caterina Bergami ([ISMAR-CNR](http://www.ismar.cnr.it){target="_blank"}). It is released under the [GNU General Public License version 3](https://www.gnu.org/licenses/gpl-3.0.html){target="_blank"} (GPL‑3).
 
 Get citation information for the TeaComposition Catalogue
 
