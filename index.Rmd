@@ -1,5 +1,5 @@
 ---
-title: "Catalogue of the samples"
+title: "Catalogue of samples"
 # author:
 #   - name: Alessandro Oggioni & Caterina Bergami
 # date: "`r Sys.Date()`"
@@ -24,81 +24,100 @@ samplesSP <- sf::st_read("samplesDataset.gpkg")
 # sf::st_geometry(samplesTable) <- NULL
 ```
 
+```{js logo-js, echo=FALSE}
+$(document).ready(function() {
+$('#header').parent().prepend('<div id=\"logo\"><img src=\"blatt_logo.png\" style=\"position:absolute; top:0; right:250px; padding:20px; height:120px; top:33px;\"></div>');
+$('#header').css('margin-rigth', '120px')
+});
+```
+
 ```{r map, echo=FALSE, message=FALSE, warning=FALSE}
 htmltools::div(
   style = htmltools::css(width="100%", height="600px"),
   leaflet::leaflet() %>%
     leaflet::addTiles() %>%
     # leaflet::addProviderTiles(provider = providers$CartoDB.DarkMatter) %>%
-    leafgl::addGlPoints(data = samplesSP[,c(2:8,12,13,16,25,27,43)], group = "samplesSP", popup = T, fillOpacity = 0.5, radius = 5) %>%
+    leafgl::addGlPoints(data = samplesSP[,c(
+      7,
+      # x,
+      12,
+      # x,
+      5,
+      6,
+      2,
+      43
+    )], group = "Samples", popup = T, fillColor = '#ff7f00', fillOpacity = 1, radius = 7) %>%
     # setView(lng = 0, lat = 20, zoom = 2) %>%
+    leaflet::addWMSTiles(
+      'http://getit.lteritalia.it/geoserver/wms',
+      layers = 'geonode:Zonobiome_poly',
+      options = leaflet::WMSTileOptions(
+        # styles = ,
+        format = "image/png",
+        transparent = T),
+      group = "Biome"
+    ) %>%
+    leaflet.extras::addWMSLegend(
+      position = 'topright',
+      uri = 'http://getit.lteritalia.it/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=geonode:Zonobiome_poly'
+    ) %>% 
     leaflet::addLayersControl(position = 'bottomright',
-                                overlayGroups = c("samplesSP"),
-                                options = leaflet::layersControlOptions(collapsed = FALSE)
-      ) %>%
-      leaflet::addEasyButton(
-        leaflet::easyButton(
-          icon = "fa-crosshairs", title = "Locate Me",
-          onClick = leaflet::JS("function(btn, map){ map.locate({setView: true}); }")
-        )
-      ) %>%
-      leaflet::addEasyButton(
-        leaflet::easyButton(
-          icon = 'fa-globe', title = 'Zoom to max extension',
-          onClick = leaflet::JS("function(btn, map){ map.setZoom(1);}")
-        )
-      ),
-  aaaa <- DT::datatable(
-      samplesSP[,c(
-        2,
-        # 3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        12,
-        # 13,
-        16,
-        25,
-        # 27,
-        43
-      )],
-      colnames = c(
-        'Site_name',
-        # 'Country',
-        'Elevation',
-        'Zonobiome',
-        'Type of biotope',
-        'Tea_typ',
-        'Treat',
-        'Incubation period',
-        # 'Year_burial',
-        'Year_recov',
-        'Site_contact',
-        # 'Institution name',
-        'sampleSheet',
-        ''
-      ),
-      filter = "top",
-      rownames = FALSE,
-      extensions = "Scroller",
-      style = "bootstrap",
-      class = "compact",
-      width = "100%",
-      height = "100%",
-      escape = FALSE,
-      options = list(
-        pageLength = 10,
-        deferRender = TRUE,
-        # scrollY = 300, 
-        # scroller = TRUE,
-        lengthMenu = c(5, 25, 50, 100)#,
-        # order = list(list(0, 'asc'), list(2, 'desc'))
+                              overlayGroups = c("Samples", "Biome"),
+                              options = leaflet::layersControlOptions(collapsed = FALSE)
+    ) %>%
+    leaflet::addEasyButton(
+      leaflet::easyButton(
+        icon = "fa-crosshairs", title = "Locate Me",
+        onClick = leaflet::JS("function(btn, map){ map.locate({setView: true}); }")
+      )
+    ) %>%
+    leaflet::addEasyButton(
+      leaflet::easyButton(
+        icon = 'fa-globe', title = 'Zoom to max extension',
+        onClick = leaflet::JS("function(btn, map){ map.setZoom(1);}")
       )
     ),
-    DT::renderDT(aaaa)
-  )
+  aaaa <- DT::datatable(
+    samplesSP[,c(
+      7,
+      # x,
+      12,
+      # x,
+      5,
+      6,
+      2,
+      43
+    )],
+    colnames = c(
+      'Tea_typ',
+      # 'Remaining mass (g)', # missing on the excel file
+      'Incubation time (month)',
+      # 'Sample per-treatment', # missing on the excel file
+      'Biome',
+      'Type of biotope',
+      'Site_name',
+      'Sample info',
+      ''
+    ),
+    filter = "top",
+    rownames = FALSE,
+    extensions = "Scroller",
+    style = "bootstrap",
+    class = "compact",
+    width = "100%",
+    height = "100%",
+    escape = FALSE,
+    options = list(
+      pageLength = 10,
+      deferRender = TRUE,
+      # scrollY = 300, 
+      # scroller = TRUE,
+      lengthMenu = c(5, 25, 50, 100)#,
+      # order = list(list(0, 'asc'), list(2, 'desc'))
+    )
+  ),
+  DT::renderDT(aaaa)
+)
 
 ```
 
