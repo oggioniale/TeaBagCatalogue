@@ -12,13 +12,13 @@ knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
 
 ## import dataset
-# samplesDataset <- readr::read_csv("informationOnSiteAndSamples_20190513.csv")
-# samplesDataset <- readRDS("samplesDataset.rds")
-# samplesDataset <- samplesDataset %>% dplyr::filter(!is.na(Latitude))
+# samplesDataset <- readr::read_csv("informationOnSiteAndSamples_20190513.csv") # 15743 rows of 44
+# samplesDataset <- samplesDataset %>% dplyr::filter(!is.na(Latitude)) # 15708 rows of 44
+# samplesDataset <- samplesDataset %>% dplyr::filter(IncubationPeriod <= 12) # 15359 rows of 44
 # samplesDataset$sampleInfo <- paste0('<a href="http://www.get-it.it/objects/samples/teabag/', samplesDataset$Merged, '.xml" target = "_blank" class = "btn btn-primary">Sample info</a>')
-# samplesDatasetSP <- sf::st_as_sf(samplesDataset, coords = c("Longitude", "Latitude"), crs = 4326)
+# samplesDatasetSP <- sf::st_as_sf(samplesDataset, coords = c("Longitude", "Latitude"), crs = 4326) # 15359 rows of 44
 # sf::write_sf(samplesDatasetSP, "samplesDataset.gpkg")
-samplesSP <- sf::st_read("samplesDataset.gpkg")
+samplesSP <- sf::st_read("samplesDataset.gpkg") # 15359 rows of 44 
 # samplesMap <- samplesSP[,c(2:8,12,13,16,25,27,43)]
 # samplesTable <- samplesMap
 # sf::st_geometry(samplesTable) <- NULL
@@ -47,7 +47,7 @@ htmltools::div(
       2,
       43
     )], group = "Samples", popup = T, fillColor = '#ff7f00', fillOpacity = 1, radius = 7) %>%
-    # setView(lng = 0, lat = 20, zoom = 2) %>%
+    leaflet::setView(lng = 113.63962, lat = 23.16001, zoom = 1) %>%
     leaflet::addWMSTiles(
       'http://getit.lteritalia.it/geoserver/wms',
       layers = 'geonode:Zonobiome_poly',
@@ -60,7 +60,7 @@ htmltools::div(
     leaflet.extras::addWMSLegend(
       position = 'topright',
       uri = 'http://getit.lteritalia.it/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=geonode:Zonobiome_poly'
-    ) %>% 
+    ) %>%
     leaflet::addLayersControl(position = 'bottomright',
                               overlayGroups = c("Samples", "Biome"),
                               options = leaflet::layersControlOptions(collapsed = FALSE)
@@ -79,23 +79,23 @@ htmltools::div(
     ),
   aaaa <- DT::datatable(
     samplesSP[,c(
+      2,
       7,
       # x,
       12,
-      # x,
+      23,
       5,
       6,
-      2,
       43
     )],
     colnames = c(
-      'Tea_typ',
+      'Site name',
+      'Tea type',
       # 'Remaining mass (g)', # missing on the excel file
       'Incubation time (month)',
-      # 'Sample per-treatment', # missing on the excel file
+      'Sample post-processing', # missing on the excel file
       'Biome',
       'Type of biotope',
-      'Site_name',
       'Sample info',
       ''
     ),
@@ -112,8 +112,12 @@ htmltools::div(
       deferRender = TRUE,
       # scrollY = 300, 
       # scroller = TRUE,
-      lengthMenu = c(5, 25, 50, 100)#,
-      # order = list(list(0, 'asc'), list(2, 'desc'))
+      lengthMenu = c(5, 25, 50, 100),
+      # order = list(list(0, 'asc'), list(2, 'desc')),
+      columnDefs = list(list(
+          visible = FALSE,
+          targets = c(8) - 1
+        ))
     )
   ),
   DT::renderDT(aaaa)

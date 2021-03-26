@@ -8,13 +8,16 @@ The catalogue is being developed by Alessandro Oggioni ([IREA-CNR](http://www.ir
 Get citation information for the TeaComposition Catalogue
 
 ``` bibtex
-@misc{,
-  author       = {},
-  title        = {{}},
-  month        = ,
-  year         = ,
-  doi          = {10.5281/zenodo.xxxxxxx}, mettere citazione per all version in Zenodo
-  url          = {https://doi.org/10.5281/zenodo.xxxxxxx}
+@software{xxxxx,
+  author       = {Alessandro Oggioni and Caterina Bergami},
+  title        = {{oggioniale/TeaCompositionCatalogue: First release of 
+                   tea composition catalogue}},
+  month        = mar,
+  year         = 2021,
+  publisher    = {Zenodo},
+  version      = {1.0},
+  doi          = {10.xxxx/zenodo.xxxxxxx},
+  url          = {https://doi.org/10.xxxx/zenodo.xxxxxxx}
 }
 ```
 
