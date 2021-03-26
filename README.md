@@ -1,3 +1,6 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4638828.svg)](https://doi.org/10.5281/zenodo.4638828)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
+
 # TeaCompositionCatalogue
 This is the first release V1.0 of the catalogue of samples of the ILTER TeaComposition Initiative.
   
@@ -8,16 +11,17 @@ The catalogue is being developed by Alessandro Oggioni ([IREA-CNR](http://www.ir
 Get citation information for the TeaComposition Catalogue
 
 ``` bibtex
-@software{xxxxx,
-  author       = {Alessandro Oggioni and Caterina Bergami},
-  title        = {{oggioniale/TeaCompositionCatalogue: First release of 
-                   tea composition catalogue}},
+@software{alessandro_oggioni_2021_4638828,
+  author       = {Alessandro Oggioni and
+                  Caterina Bergami},
+  title        = {{oggioniale/TeaCompositionCatalogue: First release 
+                   of tea composition catalogue}},
   month        = mar,
   year         = 2021,
   publisher    = {Zenodo},
-  version      = {1.0},
-  doi          = {10.xxxx/zenodo.xxxxxxx},
-  url          = {https://doi.org/10.xxxx/zenodo.xxxxxxx}
+  version      = {v1.0},
+  doi          = {10.5281/zenodo.4638828},
+  url          = {https://doi.org/10.5281/zenodo.4638828}
 }
 ```
 
